@@ -4,6 +4,7 @@ node {
     }
 
     stage("Build"){
+        steps.sh "chmod +x mvnw"
         steps.sh "./mvnw test-compile"
     }
 
