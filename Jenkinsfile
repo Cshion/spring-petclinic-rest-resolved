@@ -1,4 +1,8 @@
 node {
+    stage("Preparation"{
+        checkout scm
+    }
+
     stage("Build"){
         steps.sh "./mvnw test-compile"
     }
