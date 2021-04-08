@@ -9,6 +9,7 @@ node {
     }
 
     stage("Unit Test"){
-        steps.sh "./mvnw test"
+        steps.sh "./mvnw test
+        steps.junit keepLongStdio: true, testResults: 'target/surefire-reports/TEST-*.xml'
     }
 }
