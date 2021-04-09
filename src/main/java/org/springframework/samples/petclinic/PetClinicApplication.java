@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class PetClinicApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
+        System.out.println("Ahora, otra cuenta regresiva");
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
 }
