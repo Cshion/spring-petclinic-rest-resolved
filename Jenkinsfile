@@ -5,13 +5,13 @@ node {
 
     stage("Build"){
         sh "chmod +x mvnw"
-        //steps.sh "./mvnw test-compile"
+        steps.sh "./mvnw test-compile"
     }
 
     stage("Unit Test"){
-        //sh "./mvnw test"
-        //junit keepLongStdio: true, testResults: 'target/surefire-reports/TEST-*.xml'
-        //jacoco execPattern: 'target/**.exec' 
+        sh "./mvnw test"
+        junit keepLongStdio: true, testResults: 'target/surefire-reports/TEST-*.xml'
+        jacoco execPattern: 'target/**.exec' 
     }
     
     stage("Build & Push Docker Image"){
@@ -23,7 +23,7 @@ node {
                 "REGISTRY_PASSWORD=$token",
                 "REGISTRY_USERNAME=AWS"
             ]) {
-                //sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.0.0:build"
+                sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.0.0:build"
             }
             
         }
@@ -48,7 +48,7 @@ node {
                     echo 'Docker RUN'
                     docker run --name petclinic -d -p 9966:9966 579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/spring-petclinic-rest:latest
                     echo 'Docker Logout'
-                    docker logout
+                    docker logout 579931652533.dkr.ecr.us-east-1.amazonaws.com
                 """
             }
         }
