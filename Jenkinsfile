@@ -57,6 +57,7 @@ node {
     }
     
     stage("Run performance tests"){
+        sh "ls -la"
         sh "jmeter -j jmeter.save.saveservice.output_format=xml -n -t jmeter-petclinic-server.jmx -l jenkins.io.report.jtl"
     }
     
