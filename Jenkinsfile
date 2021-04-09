@@ -60,8 +60,11 @@ node {
          sshagent(['ee6265b6-c407-4920-8f04-3bc930f4e518']) {
             sh "scp jmeter-petclinic-server.jmx ubuntu@54.86.48.102:/home/ubuntu/jmeter-petclinic-server.jmx"
             sh """ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 << EOF
-                jmeter -j jmeter.save.saveservice.output_format=xml -n -t jmeter-petclinic-server.jmx -l jenkins.io.report.jtl
+                rm -f jenkins.io.report.jtl | echo "Removed"
+                jmeter -n -t jmeter-petclinic-server.jmx -l jenkins.io.report.jtl
              """
+             sh "scp ubuntu@54.86.48.102:/home/ubuntu/jenkins.io.report.jtl jenkins.io.report.jtl"
+             sh "ls -la"
             
          }
     }
