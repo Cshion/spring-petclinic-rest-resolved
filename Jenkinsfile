@@ -16,7 +16,7 @@ node {
     
     stage("Build & Push Docker Image"){
         withCredentials([usernamePassword(credentialsId: 'aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
-            steps.sh "aws ecr get-login-password --region us-east-1"
+            steps.sh "aws ecr get-login --region us-east-1"
         }
     }
     
