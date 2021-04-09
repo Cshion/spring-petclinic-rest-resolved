@@ -187,12 +187,17 @@
                 <version>${docker.jib-maven-plugin.version}</version>
                 <configuration>
                     <to>
-                        <image>docker.io/${docker.image.prefix}/${project.artifactId}</image>
+                        <image>579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/${project.artifactId}</image>
                         <tags>
                             <tag>${project.version}</tag>
                             <tag>latest</tag>
                         </tags>
+                        <auth>
+                           <username>${env.REGISTRY_USERNAME}</username>
+                           <password>${env.REGISTRY_PASSWORD}</password>
+                        </auth>
                     </to>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                 </configuration>
             </plugin>
 		</plugins>
