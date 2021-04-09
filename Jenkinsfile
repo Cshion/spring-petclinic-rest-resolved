@@ -39,11 +39,15 @@ node {
                 sh """ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 << EOF
                     echo 'Login docker'
                     docker login -u $user -p $token 579931652533.dkr.ecr.us-east-1.amazonaws.com
-                    echo 'Login docker'
+                    echo 'Docker pull'
                     docker pull 579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/spring-petclinic-rest:latest
+                    echo 'Docker stop'
                     docker stop petclinic || echo 'Stopped'
+                    echo 'Docker RM'
                     docker rm petclinic || echo 'Removed'
+                    echo 'Docker RUN'
                     docker run --name petclinic -d -p 9966:9966 579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/spring-petclinic-rest:latest
+                    echo 'Docker Logout'
                     docker logout
                 """
             }
