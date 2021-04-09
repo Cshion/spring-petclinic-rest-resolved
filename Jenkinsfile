@@ -29,10 +29,24 @@ node {
         }
     }
     
-    stage("Deploy application"){
-        sshagent(['ee6265b6-c407-4920-8f04-3bc930f4e518']) {
-            sh "ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 echo 'hola'"
+    stage("Deploy application
+          
+          
+          withCredentials([usernamePassword(credentialsId: 'aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+            def loginCommand = steps.sh(script:"aws ecr get-login --region us-east-1", returnStdout:true).trim()
+            def token = loginCommand.split(" ")[5]
+            def user = loginCommand.split(" ")[3]
+            
+            sshagent(['ee6265b6-c407-4920-8f04-3bc930f4e518']) {
+                sh """ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 echo << EOF
+                    echo 'Login docker'
+                    docker -u $user -p $token 579931652533.dkr.ecr.us-east-1.amazonaws.com
+                    echo 'Login docker'
+                    docker pull 579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/spring-petclinic-rest:latest
+                """
+            }
         }
+
     }
     
     stage("Run performance tests"){
