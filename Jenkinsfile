@@ -41,6 +41,10 @@ node {
                     docker login -u $user -p $token 579931652533.dkr.ecr.us-east-1.amazonaws.com
                     echo 'Login docker'
                     docker pull 579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/spring-petclinic-rest:latest
+                    docker stop petclinic || echo 'Stopped'
+                    docker rm petclinic || echo 'Removed'
+                    docker run --name petclinic -d -p 9966:9966 579931652533.dkr.ecr.us-east-1.amazonaws.com/demo/spring-petclinic-rest:latest
+                    docker logout
                 """
             }
         }
