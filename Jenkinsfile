@@ -4,14 +4,14 @@ node {
     }
 
     stage("Build"){
-        //sh "chmod +x mvnw"
-        //sh "./mvnw test-compile"
+        sh "chmod +x mvnw"
+        sh "./mvnw test-compile"
     }
 
     stage("Unit Test"){
-        //sh "./mvnw test"
-        //junit keepLongStdio: true, testResults: 'target/surefire-reports/TEST-*.xml'
-        //jacoco execPattern: 'target/**.exec' 
+        sh "./mvnw test"
+        junit keepLongStdio: true, testResults: 'target/surefire-reports/TEST-*.xml'
+        jacoco execPattern: 'target/**.exec' 
     }
     
     stage("Build & Push Docker Image"){
@@ -23,7 +23,7 @@ node {
                 "REGISTRY_PASSWORD=$token",
                 "REGISTRY_USERNAME=AWS"
             ]) {
-                //sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.0.0:build"
+                sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.0.0:build"
             }
             
         }
@@ -34,7 +34,7 @@ node {
             def loginCommand = steps.sh(script:"aws ecr get-login --region us-east-1", returnStdout:true).trim()
             def token = loginCommand.split(" ")[5]
             def user = loginCommand.split(" ")[3]
-            /*
+            
             sshagent(['ee6265b6-c407-4920-8f04-3bc930f4e518']) {
                 sh """ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 << EOF
                     echo 'Login docker'
@@ -51,7 +51,7 @@ node {
                     docker logout 579931652533.dkr.ecr.us-east-1.amazonaws.com
                 """
             }
-            */
+            
         }
 
     }
@@ -64,7 +64,6 @@ node {
                 jmeter -J jmeter.save.saveservice.output_format=xml -n -t jmeter-petclinic-server.jmx -l jenkins.io.report.jtl
              """
              sh "scp ubuntu@54.86.48.102:/home/ubuntu/jenkins.io.report.jtl jenkins.io.report.jtl"
-             sh "ls -la"
              perfReport filterRegex: '', showTrendGraphs: true, sourceDataFiles: '*.jtl'
          }
     }
