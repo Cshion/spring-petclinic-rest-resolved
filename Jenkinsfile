@@ -31,7 +31,7 @@ node {
     
     stage("Deploy application"){
         sshagent(['ee6265b6-c407-4920-8f04-3bc930f4e518']) {
-            sh "ssh ubuntu@54.86.48.102 echo 'hola'"
+            sh "ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 echo 'hola'"
         }
     }
     
