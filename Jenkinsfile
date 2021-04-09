@@ -65,7 +65,7 @@ node {
              """
              sh "scp ubuntu@54.86.48.102:/home/ubuntu/jenkins.io.report.jtl jenkins.io.report.jtl"
              sh "ls -la"
-            
+             perfReport filterRegex: '', showTrendGraphs: true, sourceDataFiles: '*.jtl'
          }
     }
     
