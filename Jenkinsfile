@@ -58,7 +58,7 @@ node {
     
     stage("Run performance tests"){
          sshagent(['ee6265b6-c407-4920-8f04-3bc930f4e518']) {
-            sh "scp ubuntu@54.86.48.102:/home/ubuntu jmeter-petclinic-server.jmx"
+            sh "scp ubuntu@54.86.48.102:/home/ubuntu/jmeter-petclinic-server.jmx jmeter-petclinic-server.jmx"
             sh """ssh -o StrictHostKeyChecking=no ubuntu@54.86.48.102 << EOF
                 jmeter -j jmeter.save.saveservice.output_format=xml -n -t jmeter-petclinic-server.jmx -l jenkins.io.report.jtl
              """
