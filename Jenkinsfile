@@ -13,4 +13,17 @@ node {
         steps.junit keepLongStdio: true, testResults: 'target/surefire-reports/TEST-*.xml'
         steps.jacoco execPattern: 'target/**.exec' 
     }
+    
+    stage("Build & Push Docker Image"){
+        
+    }
+    
+    stage("Deploy application"){
+    
+    }
+    
+    stage("Run performance tests"){
+        
+    }
+    
 }
