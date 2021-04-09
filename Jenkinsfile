@@ -23,7 +23,7 @@ node {
                 "REGISTRY_PASSWORD=$token",
                 "REGISTRY_USERNAME=AWS"
             ]) {
-                steps.sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.0.0:build"
+                //steps.sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.0.0:build"
             }
             
         }
